@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Crime Dashboards</title>
+
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!--Plotly reference-->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!--Leaflet CSS file references-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.0/leaflet.css" />
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.0/leaflet.js"></script>
+
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.5.0/MarkerCluster.css' rel='stylesheet' />
+
+	  <link href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.5.0/MarkerCluster.Default.css' rel='stylesheet' />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.5.0/leaflet.markercluster.js"></script>
+
+
+    <!--the following links incorporate the CSS required for custom icon creation -->
+    <link rel="stylesheet" href="./css/ionicons.min.css">
+    <link rel="stylesheet" href="index.css">
+    <script src="./js/leaflet.awesome-markers.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Crime Dashboard</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <label for="group"><b>Offence Group</b></label>
+                <select id="crimeType" name="crimeType" class="form-control"><option value="All" selected="selected"> -- ALL --</option>
+                </select>
+                <label for="startDate"><b>Start Date</b></label>
+                <input autocomplete="off" type='text' class="form-control" id="startDate" name="startDate" value="2018-01-01">
+                <label for="endDate"><b>End Date</b></label>
+                <input autocomplete="off" type='text' class="form-control" id="endDate" name="endDate" value="2019-07-31">
+                <label for="group"><b>Arrest</b></label>
+                <select id="arrest" class="form-control"><option value="All" selected="selected"> -- ALL --</option>
+                </select>
+                <label for="group"><b>Domestic</b></label>
+                <select id="domestic" class="form-control"><option value="All" selected="selected"> -- ALL --</option>
+                </select>
+            </ul>
+
+         
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <div class="image">
+                <img src="css/images/Capture.PNG" width="100%" height="100vh" alt="default">
+           </div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <!-- <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span>Toggle Sidebar</span>
+                    </button> -->
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link active py-0" href="index.html">MAIN</a>
+                            </li>
+                       
+                            <li class="nav-item active">
+                                <a class="nav-link active py-0" href="data.html">DATA</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link active py-0" href="analysis.html">ANALYSIS</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a  class="nav-link active py-0" href="zoom.html">MEETING</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link active py-0" href="./covid/covid-tracker/index.html">COVID</a>
+                            </li>
+                          
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="container-fluid" >
+                <div class="row" style="margin-left: 5px">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div id="map" ><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d448183.7390930067!2d76.81307038634928!3d28.646677254552095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x37205b715389640!2sDelhi!5e0!3m2!1sen!2sin!4v1626957362950!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
+                    </div>
+                    <div class="col-sm-6">
+                       
+                        <button type="button" class="btn btn-sm btn-info collapsed btn-block" data-toggle="collapse" data-target="#graph2" style="margin-top: 10px">Time Series</button>
+                        <div id="graph2" class="collapse graph"></div>
+
+                        <button type="button" class="btn btn-sm btn-info collapsed btn-block" data-toggle="collapse" data-target="#graph3" style="margin-top: 10px">Average Monthly Count</button>
+                        <div id="graph3" class="collapse graph"></div>
+
+                       
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+    <script src="js/filters.js"></script>
+    <script src="js/maps.js"></script>
+  
+    <script src="js/graphs.js"></script>
+  
+    <script src="js/crossfilter.js"></script>
+    <script src="./js/map.ts"></script>
+
+</body>
+
+</html>
